@@ -25,9 +25,9 @@ public class Tester {
 			usuario.setContrasena("1111");
 			em.persist(usuario); 
 			
-			//Usuario usuarioUpdate = em.find(Usuario.class, 3);
-			//usuarioUpdate.setCorreo("dariii@gmail.com");
-			//em.merge(usuarioUpdate); //Actualiza el usuario seleccionado
+			Usuario usuarioUpdate = em.find(Usuario.class, 3);
+			usuarioUpdate.setCorreo("dariii@gmail.com");
+			em.merge(usuarioUpdate); //Actualiza el usuario seleccionado
 			
 			//Usuario usuarioDelete = em.find(Usuario.class, 1);
 			//em.remove(usuarioDelete); //Borra el usuario 1
