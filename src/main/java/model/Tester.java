@@ -35,6 +35,8 @@ public class Tester {
 
 			em.getTransaction().commit();
 			
+			//Prueba Mauricio
+			
 			stopEntityManagerFactory();
 			System.out.println("Finalizado");
 			
