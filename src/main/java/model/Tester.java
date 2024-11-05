@@ -18,17 +18,17 @@ public class Tester {
 			em.getTransaction().begin();
 			
 
-			Usuario usuario = new Usuario();
-			usuario.setNombre("Katelyn");
-			usuario.setApellidos("Alleyne");
-			usuario.setCorreo("kate@gmail.com");
-			usuario.setContrasena("1111");
-			em.persist(usuario); 
+			//Usuario usuario = new Usuario();
+			//usuario.setNombre("Katelyn");
+			//usuario.setApellidos("Alleyne");
+			//usuario.setCorreo("kate@gmail.com");
+			//usuario.setContrasena("1111");
+			//em.persist(usuario); 
 			
 			//PRUEBA NANA
-			Usuario usuarioUpdate = em.find(Usuario.class, 3);
-			usuarioUpdate.setCorreo("dariii@gmail.com");
-			em.merge(usuarioUpdate); //Actualiza el usuario seleccionado
+			//Usuario usuarioUpdate = em.find(Usuario.class, 3);
+			//usuarioUpdate.setCorreo("dariii@gmail.com");
+			//em.merge(usuarioUpdate); //Actualiza el usuario seleccionado
 			
 			//Usuario usuarioDelete = em.find(Usuario.class, 1);
 			//em.remove(usuarioDelete); //Borra el usuario 1

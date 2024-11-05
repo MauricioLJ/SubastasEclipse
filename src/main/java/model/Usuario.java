@@ -14,8 +14,8 @@ import javax.persistence.*;
 public class Usuario implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer idUsuario;
 	private String nombre;
 	private String apellidos;
 	private String correo;
@@ -25,12 +25,12 @@ public class Usuario implements Serializable {
 	public Usuario() {
 		super();
 	}   
-	public Integer getId() {
-		return this.id;
+	public Integer getIdUsuario() {
+		return this.idUsuario;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
 	}   
 	public String getNombre() {
 		return this.nombre;

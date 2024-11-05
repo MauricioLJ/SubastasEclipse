@@ -5,6 +5,9 @@
              http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="Proyecto Subasta" transaction-type="RESOURCE_LOCAL">
         <class>model.Usuario</class>
+        <class>model.Subasta</class>
+        <class>model.Puja</class>
+        <class>model.Categoria</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/subasta?serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
