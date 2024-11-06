@@ -60,9 +60,5 @@ public class Usuario implements Serializable {
 	public void setContrasena(String contrasena) {
 		this.contrasena = contrasena;
 	}
-	public Usuario orElse(Object object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
    
 }

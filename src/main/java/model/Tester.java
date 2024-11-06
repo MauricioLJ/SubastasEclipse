@@ -6,70 +6,45 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import servicio.Servicio;
+import servicio.ServicioUsuario;
+
 public class Tester {
-	private static EntityManager em = null;
-	private static EntityManagerFactory entityManagerFactory = null;
-
 	public static void main(String[] args) {
-		try {
-			System.out.println("Registrando");
-			startEntityManagerFactory("Proyecto Subasta");
-			em = entityManagerFactory.createEntityManager();
-			em.getTransaction().begin();
-			
+		// Inicializar la EntityManagerFactory
+        Servicio.startEntityManagerFactory("Proyecto Subasta"); // Cambia esto al nombre de tu unidad de persistencia
 
-			//Usuario usuario = new Usuario();
-			//usuario.setNombre("Katelyn");
-			//usuario.setApellidos("Alleyne");
-			//usuario.setCorreo("kate@gmail.com");
-			//usuario.setContrasena("1111");
-			//em.persist(usuario); 
-			
-			//PRUEBA NANA
-			//Usuario usuarioUpdate = em.find(Usuario.class, 3);
-			//usuarioUpdate.setCorreo("dariii@gmail.com");
-			//em.merge(usuarioUpdate); //Actualiza el usuario seleccionado
-			
-			//Usuario usuarioDelete = em.find(Usuario.class, 1);
-			//em.remove(usuarioDelete); //Borra el usuario 1
+        // Crear una instancia de ServicioUsuario
+        ServicioUsuario servicioUsuario = new ServicioUsuario();
 
-			em.getTransaction().commit();
-			
-			//Prueba Mauricio
-			
-			stopEntityManagerFactory();
-			System.out.println("Finalizado");
-			
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+        // Crear un nuevo usuario (Create)
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setNombre("Juan");
+        nuevoUsuario.setCorreo("juan@example.com");
+        nuevoUsuario.setApellidos("Pepe");
+        nuevoUsuario.setContrasena("1111");
+        
+        servicioUsuario.crearUsuario(nuevoUsuario);
+        System.out.println("Usuario creado: " + nuevoUsuario);
+
+        // Leer el usuario (Read)
+        Usuario usuarioLeido = servicioUsuario.leerUsuario(nuevoUsuario.getIdUsuario());
+        System.out.println("Usuario leído: " + usuarioLeido);
+
+        // Actualizar el usuario (Update)
+        //usuarioLeido.setNombre("Juan Pérez");
+        //servicioUsuario.actualizarUsuario(usuarioLeido);
+        //System.out.println("Usuario actualizado: " + usuarioLeido);
+
+        // Eliminar el usuario (Delete)
+        //servicioUsuario.eliminarUsuario(usuarioLeido.getIdUsuario());
+        //System.out.println("Usuario eliminado con ID: " + usuarioLeido.getIdUsuario());
+
+        // Cerrar la EntityManagerFactory
+        Servicio.stopEntityManagerFactory();
 		
 
 	}
 	
-	public static void startEntityManagerFactory(String persistenceUnit) throws Exception {
-		if (entityManagerFactory == null) {
-			try {
-				entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public static void stopEntityManagerFactory() throws Exception {
-
-		if (entityManagerFactory != null) {
-			if (entityManagerFactory.isOpen()) {
-				try {
-					entityManagerFactory.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			entityManagerFactory = null;
-		}
-	}
+	
 }

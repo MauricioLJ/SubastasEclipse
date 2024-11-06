@@ -1,82 +1,71 @@
 	package model;
 
+import java.util.Scanner;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import servicio.Servicio;
+import servicio.ServicioUsuario;
+
 public class TesterLogin {
-    private static EntityManager em = null;
-    private static EntityManagerFactory entityManagerFactory = null;
 
     public static void main(String[] args) {
-        try {
-            startEntityManagerFactory("Proyecto Subasta");
-            em = entityManagerFactory.createEntityManager();
-            
-            // Llamada al método de login
-            if (login("kate@gmail.com", "1112")) {
-                System.out.println("Login exitoso.");
-            } else {
-                System.out.println("Credenciales incorrectas.");
-            }
-            
-            stopEntityManagerFactory();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-//hola hola
-    public static boolean login(String correo, String contrasena) {
-        boolean autenticado = false;
-        try {
-            em.getTransaction().begin();
+    	// Inicializar la EntityManagerFactory
+        Servicio.startEntityManagerFactory("Proyecto Subasta");
 
-            // Consulta de autenticación
-            TypedQuery<Usuario> query = em.createQuery(
-                "SELECT u FROM Usuario u WHERE u.correo = :correo AND u.contrasena = :contrasena", 
-                Usuario.class
-            );
-            query.setParameter("correo", correo);
-            query.setParameter("contrasena", contrasena);
-            
-            // Ejecuta la consulta
-            Usuario usuario = query.getSingleResult();
-            autenticado = usuario != null; // Si encuentra un usuario, autenticación es exitosa
-            
-            em.getTransaction().commit();
-        } catch (NoResultException e) {
-            System.out.println("Usuario no encontrado.");
-            em.getTransaction().rollback();
-        } catch (Exception e) {
-            e.printStackTrace();
-            em.getTransaction().rollback();
-        }
-        
-        return autenticado;
-    }
+        // Crear una instancia del servicio
+        ServicioUsuario servicioUsuario = new ServicioUsuario();
 
-    public static void startEntityManagerFactory(String persistenceUnit) throws Exception {
-        if (entityManagerFactory == null) {
-            try {
-                entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+        // Scanner para capturar la entrada del usuario
+        Scanner scanner = new Scanner(System.in);
 
-    public static void stopEntityManagerFactory() throws Exception {
-        if (entityManagerFactory != null) {
-            if (entityManagerFactory.isOpen()) {
-                try {
-                    entityManagerFactory.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            entityManagerFactory = null;
+        // Proceso de registro
+        System.out.println("=== Registro de Usuario ===");
+        System.out.print("Nombre: ");
+        String nombre = scanner.nextLine();
+
+        System.out.print("Apellidos: ");
+        String apellidos = scanner.nextLine();
+
+        System.out.print("Correo: ");
+        String correo = scanner.nextLine();
+
+        System.out.print("Contraseña: ");
+        String contrasena = scanner.nextLine();
+
+        // Crear y registrar un nuevo usuario
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setNombre(nombre);
+        nuevoUsuario.setApellidos(apellidos);
+        nuevoUsuario.setCorreo(correo);
+        nuevoUsuario.setContrasena(contrasena);
+
+        servicioUsuario.crearUsuario(nuevoUsuario);
+        System.out.println("Usuario registrado exitosamente.");
+
+        // Proceso de inicio de sesión
+        System.out.println("\n=== Inicio de Sesión ===");
+        System.out.print("Correo: ");
+        String loginCorreo = scanner.nextLine();
+
+        System.out.print("Contraseña: ");
+        String loginContrasena = scanner.nextLine();
+
+        // Autenticación
+        Usuario usuarioLogueado = servicioUsuario.loginUsuario(loginCorreo, loginContrasena);
+
+        if (usuarioLogueado != null) {
+            System.out.println("Inicio de sesión exitoso. Bienvenido, " + usuarioLogueado.getNombre() + "!");
+        } else {
+            System.out.println("Error: Correo o contraseña incorrectos.");
         }
+
+        // Cerrar el EntityManagerFactory y el scanner
+        Servicio.stopEntityManagerFactory();
+        scanner.close();
     }
 }
