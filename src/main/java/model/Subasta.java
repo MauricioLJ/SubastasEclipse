@@ -132,8 +132,9 @@ public class Subasta implements Serializable {
 		return this.imagen;
 	}
 
-	public void getImagen(String imagen) {
-		this.imagen = imagen;
-	} 
+	public void setImagen(String imagen) {
+	    this.imagen = imagen;
+	}
+
 	
 }
