@@ -1,12 +1,13 @@
 package servicio;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
 import model.Subasta;
 
-public class ServicioSubasta extends Servicio {
+public class ServicioSubasta extends Servicio implements Serializable {
 
 	public void crearSubasta(Subasta subasta) {
         startTransaction();
