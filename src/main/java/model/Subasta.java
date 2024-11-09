@@ -27,6 +27,7 @@ public class Subasta implements Serializable {
 	private LocalDateTime fechaInicio;
 	private LocalDateTime fechaFin;
 	private String estadoSubasta;
+	private String imagen;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idUsuario")
@@ -126,5 +127,13 @@ public class Subasta implements Serializable {
 	public void setPujas(Set<Puja> pujas) {
 		this.pujas = pujas;
 	}
+	
+	public String getImagen() {
+		return this.imagen;
+	}
+
+	public void getImagen(String imagen) {
+		this.imagen = imagen;
+	} 
 	
 }

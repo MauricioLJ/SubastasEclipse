@@ -1,5 +1,7 @@
 package servicio;
 
+import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 
 import model.Subasta;
@@ -50,5 +52,13 @@ public class ServicioSubasta extends Servicio {
             e.printStackTrace();
         }
     }
+    
+    public List<Subasta> listarSubastas() {
+        startTransaction();
+        List<Subasta> subastas = em.createQuery("SELECT * FROM subasta", Subasta.class).getResultList();
+        em.close();
+        return subastas;
+    }
+
 	
 }
