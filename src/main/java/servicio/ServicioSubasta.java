@@ -54,11 +54,10 @@ public class ServicioSubasta extends Servicio {
     }
     
     public List<Subasta> listarSubastas() {
-        startTransaction();
-        List<Subasta> subastas = em.createQuery("SELECT * FROM subasta", Subasta.class).getResultList();
+        startTransaction();  
+        List<Subasta> subastas = em.createQuery("SELECT s FROM Subasta s", Subasta.class).getResultList(); 
         em.close();
-        return subastas;
+        return subastas; 
     }
 
-	
 }
