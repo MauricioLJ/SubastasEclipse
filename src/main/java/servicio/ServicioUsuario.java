@@ -67,5 +67,22 @@ public class ServicioUsuario extends Servicio {
             return null;
         }
     }
+    
+    public boolean existeCorreo(String correo) {
+        try {
+            startTransaction();
+            long count = em.createQuery(
+                    "SELECT COUNT(u) FROM Usuario u WHERE u.correo = :correo", Long.class)
+                    .setParameter("correo", correo)
+                    .getSingleResult();
+            em.close();
+            return count > 0;
+        } catch (Exception e) {
+            em.close();
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 	
 }
