@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.lang.Integer;
 import java.lang.String;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,8 +25,8 @@ public class Subasta implements Serializable {
 	private String nombre;
 	private String descripcion;
 	private long precioInicial;
-	private LocalDateTime fechaInicio;
-	private LocalDateTime fechaFin;
+	private LocalDate fechaInicio;
+	private LocalDate fechaFin;
 	private String estadoSubasta;
 	private String imagen;
 	
@@ -79,20 +80,20 @@ public class Subasta implements Serializable {
 	public void setPrecioInicial(long precioInicial) {
 		this.precioInicial = precioInicial;
 	}   
-	public LocalDateTime getFechaInicio() {
+	public LocalDate getFechaInicio() {
 		return this.fechaInicio;
 	}
 
-	public void setFechaInicio(LocalDateTime fechaInicio) {
+	public void setFechaInicio(LocalDate fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}   
-	public LocalDateTime getFechaFin() {
-		return this.fechaFin;
-	}
+	public LocalDate getFechaFin() {
+        return fechaFin;
+    }
 
-	public void setFechaFin(LocalDateTime fechaFin) {
-		this.fechaFin = fechaFin;
-	}   
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }  
 	public String getEstadoSubasta() {
 		return this.estadoSubasta;
 	}
