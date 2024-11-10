@@ -9,7 +9,7 @@ import model.Subasta;
 
 public class ServicioSubasta extends Servicio implements Serializable {
 
-	public void crearSubasta(Subasta subasta) {
+  public void crearSubasta(Subasta subasta) {
         startTransaction();
         try {
             em.persist(subasta);
