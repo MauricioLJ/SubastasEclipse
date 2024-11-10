@@ -20,11 +20,15 @@ public class Usuario implements Serializable {
 	private String apellidos;
 	private String correo;
 	private String contrasena;
+	private String pais;
+	private String fotoPerfil;
+	
 	private static final long serialVersionUID = 1L;
 
 	public Usuario() {
 		super();
 	}   
+	
 	public Integer getIdUsuario() {
 		return this.idUsuario;
 	}
@@ -60,5 +64,21 @@ public class Usuario implements Serializable {
 	public void setContrasena(String contrasena) {
 		this.contrasena = contrasena;
 	}
-   
+	
+	public String getPais() {
+		return this.pais;
+	}
+	
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+	
+	public String getFotoPerfil () {
+		return this.fotoPerfil;
+	}
+	
+	public void setFotoPerfil (String fotoPerfil) {
+		this.fotoPerfil = fotoPerfil;
+	}
+	
 }

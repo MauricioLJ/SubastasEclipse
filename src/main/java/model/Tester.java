@@ -19,10 +19,12 @@ public class Tester {
 
         // Crear un nuevo usuario (Create)
         Usuario nuevoUsuario = new Usuario();
-        nuevoUsuario.setNombre("Juan");
-        nuevoUsuario.setCorreo("juan@example.com");
-        nuevoUsuario.setApellidos("Pepe");
-        nuevoUsuario.setContrasena("1111");
+        nuevoUsuario.setNombre("Felipe");
+        nuevoUsuario.setCorreo("Felipe@gmail.com");
+        nuevoUsuario.setApellidos("Mendez");
+        nuevoUsuario.setContrasena("1234");
+        nuevoUsuario.setPais("Costa rica");
+        nuevoUsuario.setFotoPerfil("hola");
         
         servicioUsuario.crearUsuario(nuevoUsuario);
         System.out.println("Usuario creado: " + nuevoUsuario);
