@@ -22,6 +22,8 @@ public class Usuario implements Serializable {
 	private String contrasena;
 	private String pais;
 	private String fotoPerfil;
+	private Double calificacionPromedio = 0.0;
+    private Integer cantidadCalificaciones = 0;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -76,9 +78,25 @@ public class Usuario implements Serializable {
 	public String getFotoPerfil () {
 		return this.fotoPerfil;
 	}
-	
-	public void setFotoPerfil (String fotoPerfil) {
+
+	public void setFotoPerfil(String fotoPerfil) {
 		this.fotoPerfil = fotoPerfil;
 	}
-	
+
+	public Double getCalificacionPromedio() {
+		return calificacionPromedio;
+	}
+
+	public void setCalificacionPromedio(Double calificacionPromedio) {
+		this.calificacionPromedio = calificacionPromedio;
+	}
+
+	public Integer getCantidadCalificaciones() {
+		return cantidadCalificaciones;
+	}
+
+	public void setCantidadCalificaciones(Integer cantidadCalificaciones) {
+		this.cantidadCalificaciones = cantidadCalificaciones;
+	}
+
 }

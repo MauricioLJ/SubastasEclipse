@@ -85,4 +85,25 @@ public class ServicioUsuario extends Servicio {
     }
 
 	
+  
+    
+    public void actualizarCalificacion(Usuario usuario, Integer nuevaCalificacion) {
+        startTransaction();
+        try {
+            int cantidad = (usuario.getCantidadCalificaciones() == null) ? 0 : usuario.getCantidadCalificaciones();
+            double promedioActual = (usuario.getCalificacionPromedio() == null) ? 0.0 : usuario.getCalificacionPromedio();
+
+            double nuevoPromedio = ((promedioActual * cantidad) + nuevaCalificacion) / (cantidad + 1);
+            usuario.setCalificacionPromedio(nuevoPromedio);
+            usuario.setCantidadCalificaciones(cantidad + 1);
+
+            em.merge(usuario); 
+            commitTransaction();
+        } catch (Exception e) {
+            rollbackTransaction();  
+            e.printStackTrace();
+        }
+    }
+
+    
 }
