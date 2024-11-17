@@ -1,9 +1,13 @@
 package servicio;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.TypedQuery;
 
 import model.Subasta;
 
