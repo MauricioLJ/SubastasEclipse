@@ -1,8 +1,11 @@
 package servicio;
 
+import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 
+import model.Subasta;
 import model.Usuario;
 
 public class ServicioUsuario extends Servicio {
@@ -84,9 +87,6 @@ public class ServicioUsuario extends Servicio {
         }
     }
 
-	
-  
-    
     public void actualizarCalificacion(Usuario usuario, Integer nuevaCalificacion) {
         startTransaction();
         try {
@@ -103,6 +103,13 @@ public class ServicioUsuario extends Servicio {
             rollbackTransaction();  
             e.printStackTrace();
         }
+    }
+
+    public List<Usuario> listarUsuarios() {
+        startTransaction();  
+        List<Usuario> usuario = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList(); 
+        em.close();
+        return usuario; 
     }
 
     
