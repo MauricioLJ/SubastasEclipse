@@ -3,26 +3,26 @@ package servicio;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+ 
+public abstract class Servicio {
 
-public class Servicio {
-
-	protected static EntityManagerFactory entityManagerFactory;
+	protected EntityManagerFactory entityManagerFactory;
     protected EntityManager em;
     
     public Servicio() {
         if (entityManagerFactory == null) {
-            entityManagerFactory = Persistence.createEntityManagerFactory("Proyecto Subasta"); // Asegúrate que coincide con el nombre en persistence.xml
+            entityManagerFactory = Persistence.createEntityManagerFactory("Proyecto Subasta");
         }
         em = entityManagerFactory.createEntityManager();
     }
 
-    public static void startEntityManagerFactory(String persistenceUnit) {
+    public void startEntityManagerFactory(String persistenceUnit) {
         if (entityManagerFactory == null) {
             entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit);
         }
     }
 
-    public static void stopEntityManagerFactory() {
+    public void stopEntityManagerFactory() {
         if (entityManagerFactory != null && entityManagerFactory.isOpen()) {
             entityManagerFactory.close();
             entityManagerFactory = null;

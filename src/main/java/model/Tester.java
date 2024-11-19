@@ -11,8 +11,6 @@ import servicio.ServicioUsuario;
 
 public class Tester {
 	public static void main(String[] args) {
-		// Inicializar la EntityManagerFactory
-        Servicio.startEntityManagerFactory("Proyecto Subasta"); // Cambia esto al nombre de tu unidad de persistencia
 
         // Crear una instancia de ServicioUsuario
         ServicioUsuario servicioUsuario = new ServicioUsuario();
@@ -43,7 +41,7 @@ public class Tester {
         //System.out.println("Usuario eliminado con ID: " + usuarioLeido.getIdUsuario());
 
         // Cerrar la EntityManagerFactory
-        Servicio.stopEntityManagerFactory();
+        servicioUsuario.stopEntityManagerFactory();
 		
 
 	}

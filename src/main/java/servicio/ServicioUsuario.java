@@ -111,6 +111,29 @@ public class ServicioUsuario extends Servicio {
         em.close();
         return usuario; 
     }
+    
+    public void actualizarClavePorCorreo(String correo, String nuevaClave) {
+        startTransaction();
+        try {
+            // Buscar al usuario por correo
+            Usuario usuario = em.createQuery("SELECT u FROM Usuario u WHERE u.correo = :correo", Usuario.class)
+                                 .setParameter("correo", correo)
+                                 .getSingleResult();
+
+            if (usuario != null) {
+                usuario.setContrasena(nuevaClave); // Actualizar la contraseña
+                em.merge(usuario); // Guardar el cambio en la base de datos
+            }
+
+            commitTransaction();
+        } catch (NoResultException e) {
+            rollbackTransaction();
+            throw new EntityNotFoundException("Usuario no encontrado con el correo: " + correo);
+        } catch (Exception e) {
+            rollbackTransaction();
+            e.printStackTrace();
+        }
+    }
 
     
 }

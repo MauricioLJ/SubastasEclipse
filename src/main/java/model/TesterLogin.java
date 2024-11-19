@@ -15,7 +15,6 @@ public class TesterLogin {
 
     public static void main(String[] args) {
     	// Inicializar la EntityManagerFactory
-        Servicio.startEntityManagerFactory("Proyecto Subasta");
 
         // Crear una instancia del servicio
         ServicioUsuario servicioUsuario = new ServicioUsuario();
@@ -65,7 +64,7 @@ public class TesterLogin {
         }
 
         // Cerrar el EntityManagerFactory y el scanner
-        Servicio.stopEntityManagerFactory();
+        servicioUsuario.stopEntityManagerFactory();
         scanner.close();
     }
 }
