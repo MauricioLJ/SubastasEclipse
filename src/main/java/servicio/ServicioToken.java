@@ -29,15 +29,15 @@ public class ServicioToken extends Servicio {
         Token tokenEntity = new Token();
         tokenEntity.setEmail(email);
         tokenEntity.setToken(token);
-        tokenEntity.setExpirationTime(LocalDateTime.now().plusMinutes(30)); // Definir tiempo de expiración (por ejemplo, 30 minutos)
+        tokenEntity.setExpirationTime(LocalDateTime.now().plusMinutes(30)); 
 
         try {
-            startTransaction(); // Iniciar la transacción
-            em.persist(tokenEntity); // Guardar el token en la base de datos
-            commitTransaction(); // Confirmar la transacción
+            startTransaction(); 
+            em.persist(tokenEntity); 
+            commitTransaction();
         } catch (RuntimeException e) {
-            rollbackTransaction(); // Deshacer en caso de error
-            throw e; // Re-lanzar la excepción si algo falla
+            rollbackTransaction(); 
+            throw e; 
         }
     }
 
