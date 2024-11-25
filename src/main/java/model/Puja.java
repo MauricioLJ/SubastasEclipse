@@ -12,45 +12,48 @@ import javax.persistence.*;
 
 public class Puja implements Serializable {
 
-	   
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long idPuja;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idPuja;
 	private long monto;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idSubasta")
+	@JoinColumn(name = "idSubasta")
 	private Subasta subasta;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idUsuario")
+	@JoinColumn(name = "idUsuario")
 	private Usuario usuario;
 	private static final long serialVersionUID = 1L;
 
 	public Puja() {
 		super();
-	}   
-	public Long getIdPuja() {
+	}
+
+	public Integer getIdPuja() {
 		return this.idPuja;
 	}
 
-	public void setIdPuja(Long idPuja) {
+	public void setIdPuja(Integer idPuja) {
 		this.idPuja = idPuja;
-	}   
-	public long getMonto() {
+	}
+
+	long getMonto() {
 		return this.monto;
 	}
 
 	public void setMonto(long monto) {
 		this.monto = monto;
-	}   
+	}
+
 	public Subasta getSubasta() {
 		return this.subasta;
 	}
 
 	public void setSubasta(Subasta subasta) {
 		this.subasta = subasta;
-	}   
+	}
+
 	public Usuario getUsuario() {
 		return this.usuario;
 	}
@@ -58,5 +61,5 @@ public class Puja implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-   
+
 }
