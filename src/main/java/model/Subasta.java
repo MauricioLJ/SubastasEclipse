@@ -15,6 +15,12 @@ import javax.persistence.*;
  *
  */
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "Subasta.porCategoria", query = "SELECT s FROM Subasta s JOIN s.categorias c WHERE c.nombre = :categoria"),
+	@NamedQuery(name = "Subasta.listarTodas", query = "SELECT s FROM Subasta s"),
+	@NamedQuery(name = "Subasta.porUsuario", query = "SELECT s FROM Subasta s WHERE s.propietario.idUsuario = :idUsuario")
+
+})
 
 public class Subasta implements Serializable {
 

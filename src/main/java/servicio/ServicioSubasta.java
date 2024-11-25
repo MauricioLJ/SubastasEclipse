@@ -59,26 +59,48 @@ public class ServicioSubasta extends Servicio implements Serializable {
     }
     
     public List<Subasta> listarSubastas() {
-        startTransaction();  
-        List<Subasta> subastas = em.createQuery("SELECT s FROM Subasta s", Subasta.class).getResultList(); 
-        em.close();
-        return subastas; 
+        startTransaction();
+        try {
+            TypedQuery<Subasta> query = em.createNamedQuery("Subasta.listarTodas", Subasta.class);
+            List<Subasta> subastas = query.getResultList();
+            em.close();
+            return subastas;
+        } catch (Exception e) {
+            e.printStackTrace();
+            rollbackTransaction();
+            return Collections.emptyList();
+        }
+    }
+
+    public List<Subasta> listaSubastasPorUsuario(int idUsuario) {
+        startTransaction();
+        try {
+            TypedQuery<Subasta> query = em.createNamedQuery("Subasta.porUsuario", Subasta.class);
+            query.setParameter("idUsuario", idUsuario);
+            List<Subasta> subastas = query.getResultList();
+            em.close();
+            return subastas;
+        } catch (Exception e) {
+            e.printStackTrace();
+            rollbackTransaction();
+            return Collections.emptyList();
+        }
     }
     
-    public List<Subasta> listaSubastasPorUsuario(int idUsuario) {
-    	startTransaction();
-    	try {
-    		TypedQuery<Subasta> query = em.createQuery(
-                    "SELECT s FROM Subasta s WHERE s.propietario.idUsuario = :idUsuario", Subasta.class);
-                query.setParameter("idUsuario", idUsuario);
-                List<Subasta> subastas = query.getResultList();
-                em.close();
-                return subastas;
-		} catch (Exception e) {
-			e.printStackTrace();
-			rollbackTransaction();
-			return Collections.emptyList();
-		}
+    public List<Subasta> listarSubasPorCategoria(String categoria) {
+        startTransaction();
+        try {
+            TypedQuery<Subasta> query = em.createNamedQuery("Subasta.porCategoria", Subasta.class);
+            query.setParameter("categoria", categoria);
+            List<Subasta> subastas = query.getResultList();
+            em.close();
+            return subastas;
+        } catch (Exception e) {
+            e.printStackTrace();
+            rollbackTransaction();
+            return Collections.emptyList();
+        }
     }
+
 
 }
