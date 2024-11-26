@@ -60,5 +60,6 @@ public class ServicioCategoria extends Servicio implements Serializable{
         em.close();
         return categoria; 
     }
+    
 
 }
