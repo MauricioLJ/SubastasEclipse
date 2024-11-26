@@ -58,15 +58,22 @@ public class ServicioPuja extends Servicio implements Serializable {
 
 	public List<Puja> listarPujas() {
 		startTransaction();
-		List<Puja> pujas = em.createQuery("SELECT p FROM Puja p", Puja.class).getResultList();
-		em.close();
-		return pujas;
+		try {
+			TypedQuery<Puja> query = em.createNamedQuery("Puja.listarTodas", Puja.class);
+			List<Puja> pujas = query.getResultList();
+			em.close();
+			return pujas;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollbackTransaction();
+			return Collections.emptyList();
+		}
 	}
 
 	public List<Puja> listaPujasPorSubasta(int idSubasta) {
 		startTransaction();
 		try {
-			TypedQuery<Puja> query = em.createQuery("SELECT p FROM Puja p WHERE p.subasta.id = :idSubasta", Puja.class);
+			TypedQuery<Puja> query = em.createNamedQuery("Puja.porSubasta", Puja.class);
 			query.setParameter("idSubasta", idSubasta);
 			List<Puja> pujas = query.getResultList();
 			em.close();

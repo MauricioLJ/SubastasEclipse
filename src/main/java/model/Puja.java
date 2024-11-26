@@ -9,7 +9,11 @@ import javax.persistence.*;
  *
  */
 @Entity
-
+@NamedQueries({ 
+	@NamedQuery(name = "Puja.listarTodas", query = "SELECT p FROM Puja p"),
+	@NamedQuery(name = "Puja.porSubasta ", query = "SELECT p FROM Puja p WHERE p.subasta.idSubasta = :idSubasta") 
+	
+})
 public class Puja implements Serializable {
 
 	@Id
