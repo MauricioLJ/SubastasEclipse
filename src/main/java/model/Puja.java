@@ -2,6 +2,9 @@ package model;
 
 import java.io.Serializable;
 import java.lang.Long;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 /**
@@ -11,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({ 
 	@NamedQuery(name = "Puja.listarTodas", query = "SELECT p FROM Puja p"),
-	@NamedQuery(name = "Puja.porSubasta ", query = "SELECT p FROM Puja p WHERE p.subasta.idSubasta = :idSubasta") 
+	@NamedQuery(name = "Puja.porSubasta", query = "SELECT p FROM Puja p WHERE p.subasta.idSubasta = :idSubasta") 
 	
 })
 public class Puja implements Serializable {
@@ -19,8 +22,11 @@ public class Puja implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idPuja;
-	private long monto;
+	private double monto;
 
+	@Column(name = "fechaPuja")
+	private Timestamp fechaPuja;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idSubasta")
 	private Subasta subasta;
@@ -32,6 +38,7 @@ public class Puja implements Serializable {
 
 	public Puja() {
 		super();
+		this.fechaPuja = new Timestamp(System.currentTimeMillis());
 	}
 
 	public Integer getIdPuja() {
@@ -42,11 +49,11 @@ public class Puja implements Serializable {
 		this.idPuja = idPuja;
 	}
 
-	long getMonto() {
+	public double getMonto() {
 		return this.monto;
 	}
 
-	public void setMonto(long monto) {
+	public void setMonto(double monto) {
 		this.monto = monto;
 	}
 
@@ -65,5 +72,13 @@ public class Puja implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
+	public Timestamp getFechaPuja() {
+        return fechaPuja;
+    }
+
+    public void setFechaPuja(Timestamp fechaPuja) {
+        this.fechaPuja = fechaPuja;
+    }
 
 }

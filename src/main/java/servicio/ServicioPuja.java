@@ -8,18 +8,23 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
 
 import model.Puja;
+import model.Subasta;
 
 public class ServicioPuja extends Servicio implements Serializable {
 
 	public void crearPuja(Puja puja) {
-		startTransaction();
-		try {
-			em.persist(puja);
-			commitTransaction();
-		} catch (Exception e) {
-			rollbackTransaction();
-			e.printStackTrace();
-		}
+	    if (puja == null) {
+	        throw new IllegalArgumentException("Puja no puede ser nula");
+	    }
+
+	    startTransaction();
+	    try {
+	        em.persist(puja);
+	        commitTransaction();
+	    } catch (Exception e) {
+	        rollbackTransaction();
+	        e.printStackTrace();
+	    }
 	}
 
 	public Puja leerPuja(Integer id) {
@@ -71,17 +76,23 @@ public class ServicioPuja extends Servicio implements Serializable {
 	}
 
 	public List<Puja> listaPujasPorSubasta(int idSubasta) {
-		startTransaction();
-		try {
-			TypedQuery<Puja> query = em.createNamedQuery("Puja.porSubasta", Puja.class);
-			query.setParameter("idSubasta", idSubasta);
-			List<Puja> pujas = query.getResultList();
-			em.close();
-			return pujas;
-		} catch (Exception e) {
-			e.printStackTrace();
-			rollbackTransaction();
-			return Collections.emptyList();
-		}
+	    // Optional: Validate auction exists first
+	    Subasta subasta = em.find(Subasta.class, idSubasta);
+	    if (subasta == null) {
+	        return Collections.emptyList();
+	    }
+
+	    startTransaction();
+	    try {
+	        TypedQuery<Puja> query = em.createNamedQuery("Puja.porSubasta", Puja.class);
+	        query.setParameter("idSubasta", idSubasta);
+	        List<Puja> pujas = query.getResultList();
+	        em.close();
+	        return pujas;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        rollbackTransaction();
+	        return Collections.emptyList();
+	    }
 	}
 }

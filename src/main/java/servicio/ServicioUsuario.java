@@ -153,6 +153,25 @@ public class ServicioUsuario extends Servicio {
         }
     }
 
+    public Usuario obtenerUsuarioPorId(int idUsuario) {
+        try {
+            startTransaction();
+            Usuario usuario = em.createQuery("SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario", Usuario.class)
+                                .setParameter("idUsuario", idUsuario)
+                                .getSingleResult();
+            em.close();
+            return usuario;
+        } catch (NoResultException e) {
+            em.close();
+            return null; // Si no encuentra un usuario, devuelve null
+        } catch (Exception e) {
+            em.close();
+            e.printStackTrace();
+            return null; // Manejo de excepciones generales
+        }
+        
+        
+    }
 
     
 }

@@ -30,7 +30,7 @@ public class Subasta implements Serializable {
 	private Integer idSubasta;
 	private String nombre;
 	private String descripcion;
-	private long precioInicial;
+	private double precioInicial;
 	private Date fechaInicio;
 	private Date fechaFin;
 	private String estadoSubasta;
@@ -79,11 +79,11 @@ public class Subasta implements Serializable {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}   
-	public long getPrecioInicial() {
+	public double getPrecioInicial() {
 		return this.precioInicial;
 	}
 
-	public void setPrecioInicial(long precioInicial) {
+	public void setPrecioInicial(double precioInicial) {
 		this.precioInicial = precioInicial;
 	}   
 	public Date getFechaInicio() {
