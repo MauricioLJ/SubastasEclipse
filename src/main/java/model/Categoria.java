@@ -22,7 +22,7 @@ public class Categoria implements Serializable {
 	private Integer idCategoria;
 	private String nombre;
 	
-	@ManyToMany(mappedBy = "categorias")
+	@ManyToMany(mappedBy = "categorias", cascade = CascadeType.ALL)
 	private Set<Subasta> subastas = new HashSet<>();
 	private static final long serialVersionUID = 1L;
 

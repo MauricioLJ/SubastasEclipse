@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
 
@@ -41,6 +42,37 @@ public class ServicioSubasta extends Servicio implements Serializable {
             e.printStackTrace();
         }
     }
+
+    public List<Subasta> recomendarSubastas(List<String> categorias, int idUsuario) {
+        if (categorias == null || categorias.isEmpty()) {
+            return Collections.emptyList(); 
+        }
+        
+        startTransaction();
+        
+        try {
+            TypedQuery<Subasta> query = em.createQuery(
+                "SELECT DISTINCT s FROM Subasta s " +
+                "JOIN s.categorias c " +
+                "WHERE c.nombre IN (:categorias) " +
+                "AND s.idSubasta NOT IN (" +
+                "    SELECT i.subasta.idSubasta " +
+                "    FROM Interacciones i " +
+                "    WHERE i.usuario.idUsuario = :idUsuario" +
+                ")", Subasta.class
+            );
+            query.setParameter("categorias", categorias);
+            query.setParameter("idUsuario", idUsuario);
+
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            rollbackTransaction();
+            return Collections.emptyList();
+        } finally {
+            em.close();
+        }
+    }	
 
     public void eliminarSubasta(Integer id) {
         startTransaction();
@@ -101,6 +133,6 @@ public class ServicioSubasta extends Servicio implements Serializable {
             return Collections.emptyList();
         }
     }
-
-
+    
+   
 }
