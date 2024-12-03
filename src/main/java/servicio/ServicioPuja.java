@@ -13,18 +13,18 @@ import model.Subasta;
 public class ServicioPuja extends Servicio implements Serializable {
 
 	public void crearPuja(Puja puja) {
-	    if (puja == null) {
-	        throw new IllegalArgumentException("Puja no puede ser nula");
-	    }
+		if (puja == null) {
+			throw new IllegalArgumentException("Puja no puede ser nula");
+		}
 
-	    startTransaction();
-	    try {
-	        em.persist(puja);
-	        commitTransaction();
-	    } catch (Exception e) {
-	        rollbackTransaction();
-	        e.printStackTrace();
-	    }
+		startTransaction();
+		try {
+			em.persist(puja);
+			commitTransaction();
+		} catch (Exception e) {
+			rollbackTransaction();
+			e.printStackTrace();
+		}
 	}
 
 	public Puja leerPuja(Integer id) {
@@ -76,23 +76,39 @@ public class ServicioPuja extends Servicio implements Serializable {
 	}
 
 	public List<Puja> listaPujasPorSubasta(int idSubasta) {
-	    // Optional: Validate auction exists first
-	    Subasta subasta = em.find(Subasta.class, idSubasta);
-	    if (subasta == null) {
-	        return Collections.emptyList();
-	    }
+		// Optional: Validate auction exists first
+		Subasta subasta = em.find(Subasta.class, idSubasta);
+		if (subasta == null) {
+			return Collections.emptyList();
+		}
 
-	    startTransaction();
-	    try {
-	        TypedQuery<Puja> query = em.createNamedQuery("Puja.porSubasta", Puja.class);
-	        query.setParameter("idSubasta", idSubasta);
-	        List<Puja> pujas = query.getResultList();
-	        em.close();
-	        return pujas;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        rollbackTransaction();
-	        return Collections.emptyList();
-	    }
+		startTransaction();
+		try {
+			TypedQuery<Puja> query = em.createNamedQuery("Puja.porSubasta", Puja.class);
+			query.setParameter("idSubasta", idSubasta);
+			List<Puja> pujas = query.getResultList();
+			em.close();
+			return pujas;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollbackTransaction();
+			return Collections.emptyList();
+		}
 	}
+
+	public List<Puja> obtenerHistorialPorUsuario(Integer idUsuario) {
+		startTransaction();
+		try {
+			TypedQuery<Puja> query = em.createQuery("SELECT p FROM Puja p WHERE p.usuario.idUsuario = :idUsuario", Puja.class);
+			query.setParameter("idUsuario", idUsuario);
+			List<Puja> historial = query.getResultList();
+			em.close();
+			return historial;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollbackTransaction();
+			return Collections.emptyList();
+		}
+	}
+
 }
