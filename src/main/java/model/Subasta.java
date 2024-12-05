@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
 	@NamedQuery(name = "Subasta.porCategoria", query = "SELECT s FROM Subasta s JOIN s.categorias c WHERE c.nombre = :categoria"),
-	@NamedQuery(name = "Subasta.listarTodas", query = "SELECT s FROM Subasta s ORDER BY s.fechaInicio DESC"),
+	@NamedQuery(name = "Subasta.listarTodas", query = "SELECT s FROM Subasta s WHERE s.estadoSubasta = 'Activo' ORDER BY s.fechaInicio DESC"),
 	@NamedQuery(name = "Subasta.porUsuario", query = "SELECT s FROM Subasta s WHERE s.propietario.idUsuario = :idUsuario")
 
 })
