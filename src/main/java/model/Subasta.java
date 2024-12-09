@@ -40,6 +40,9 @@ public class Subasta implements Serializable {
     @JoinColumn(name = "idUsuario")
 	private Usuario propietario;
 	
+	@OneToMany(mappedBy = "subasta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Interacciones> interacciones = new HashSet<>();
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	private Puja pujaGanadora;
 	
@@ -113,7 +116,8 @@ public class Subasta implements Serializable {
 
 	public void setPropietario(Usuario propietario) {
 		this.propietario = propietario;
-	}   
+	}  
+	
 	public Puja getPujaGanadora() {
 		return this.pujaGanadora;
 	}
@@ -143,5 +147,11 @@ public class Subasta implements Serializable {
 	    this.imagen = imagen;
 	}
 
+	public Set<Interacciones> getInteracciones() {
+		return interacciones;
+	}
+	public void setInteracciones(Set<Interacciones> interacciones) {
+		this.interacciones = interacciones;
+	}
 	
 }

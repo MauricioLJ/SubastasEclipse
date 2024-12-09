@@ -86,7 +86,7 @@ public class Interacciones implements Serializable {
     }
 
     public enum TipoInteraccion {
-        VER, PUJAR, GANAR
+        VER
     }
    
 }
