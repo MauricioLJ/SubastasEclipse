@@ -142,4 +142,24 @@ public class ServicioSubasta extends Servicio implements Serializable {
 		}
 	}
 
+	public List<Subasta> listarSubastasGanadasPorUsuario(Integer idUsuario) {
+	    startTransaction();
+	    try {
+
+	        TypedQuery<Subasta> query = em.createQuery(
+	                "SELECT s FROM Subasta s WHERE s.pujaGanadora.usuario.idUsuario = :idUsuario", 
+	                Subasta.class
+	        );
+	        query.setParameter("idUsuario", idUsuario);
+	        List<Subasta> subastasGanadas = query.getResultList();
+	        em.close();
+	        return subastasGanadas;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        rollbackTransaction();
+	        return Collections.emptyList();
+	    }
+	}
+
+	
 }
