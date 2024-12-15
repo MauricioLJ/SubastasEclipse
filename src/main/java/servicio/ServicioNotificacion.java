@@ -69,4 +69,19 @@ public class ServicioNotificacion extends Servicio implements Serializable {
 			return Collections.emptyList();
 		}
 	}
+	
+	public List<Notificacion> obtenerNotificacionesNoLeidas(Integer usuarioId) {
+        startTransaction();
+        try {
+            TypedQuery<Notificacion> query = em.createNamedQuery("Notificacion.noLeidas", Notificacion.class);
+            query.setParameter("idUsuario", usuarioId);
+            List<Notificacion> notificaciones = query.getResultList();
+            em.close();
+            return notificaciones;
+        } catch (Exception e) {
+            e.printStackTrace();
+            rollbackTransaction();
+            return Collections.emptyList();
+        }
+    }
 }

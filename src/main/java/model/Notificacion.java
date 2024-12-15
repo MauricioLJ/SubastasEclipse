@@ -12,7 +12,8 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries({ @NamedQuery(name = "Notificacion.listarTodas", query = "SELECT n FROM Notificacion n"),
-		@NamedQuery(name = "Notificacion.porUsuario", query = "SELECT n FROM Notificacion n WHERE n.usuario.idUsuario = :idUsuario")
+		@NamedQuery(name = "Notificacion.porUsuario", query = "SELECT n FROM Notificacion n WHERE n.usuario.idUsuario = :idUsuario"),
+		@NamedQuery(name = "Notificacion.noLeidas", query = "SELECT n FROM Notificacion n WHERE n.usuario.idUsuario = :idUsuario AND n.leida = false")
 
 })
 public class Notificacion implements Serializable {
@@ -24,15 +25,53 @@ public class Notificacion implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idUsuario")
 	private Usuario usuario;
-	
-	private String tipoNotificacion;
+
+	private String tipoNotificacion; // e.g., "PUJA", "SUBASTA", "MENSAJE"
 	private String mensaje;
 	private Date fechaCreacion;
+
+	// New field to track if notification has been read
+	private boolean leida = false;
+
+	// Optional: Additional context fields for bid notifications
+	private Integer subastaId;
+	private Double montoPuja;
+	private String subastaNombre;
 
 	private static final long serialVersionUID = 1L;
 
 	public Notificacion() {
 		super();
+		this.fechaCreacion = new Date();
+	}
+
+	public void marcarComoLeida() {
+		this.leida = true;
+	}
+
+	// Existing getters and setters, plus new ones for added fields
+	public boolean isLeida() {
+		return leida;
+	}
+
+	public void setLeida(boolean leida) {
+		this.leida = leida;
+	}
+
+	public Integer getSubastaId() {
+		return subastaId;
+	}
+
+	public void setSubastaId(Integer subastaId) {
+		this.subastaId = subastaId;
+	}
+
+	public Double getMontoPuja() {
+		return montoPuja;
+	}
+
+	public void setMontoPuja(Double montoPuja) {
+		this.montoPuja = montoPuja;
 	}
 
 	public int getIdNotificacion() {
@@ -58,7 +97,7 @@ public class Notificacion implements Serializable {
 	public void setTipoNotificacion(String tipoNotificacion) {
 		this.tipoNotificacion = tipoNotificacion;
 	}
-	
+
 	public String getMensaje() {
 		return mensaje;
 	}
@@ -74,4 +113,12 @@ public class Notificacion implements Serializable {
 	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
+	
+	public String getSubastaNombre() {
+        return subastaNombre;
+    }
+
+    public void setSubastaNombre(String subastaNombre) {
+        this.subastaNombre = subastaNombre;
+    }
 }
